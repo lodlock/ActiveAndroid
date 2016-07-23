@@ -14,6 +14,7 @@ import com.activeandroid.sebbia.Cache;
 import com.activeandroid.sebbia.Configuration;
 import com.activeandroid.sebbia.Model;
 import com.activeandroid.sebbia.TableInfo;
+import com.activeandroid.sebbia.util.Log;
 
 public class ContentProvider extends android.content.ContentProvider {
 	//////////////////////////////////////////////////////////////////////////////////////
