@@ -128,6 +128,7 @@ public class ContentProvider extends android.content.ContentProvider {
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		final Class<? extends Model> type = getModelType(uri);
+		Log.d("modelType:"+type+" from uri:"+uri);
 		final Cursor cursor = Cache.openDatabase().query(
 				Cache.getTableName(type),
 				projection,
