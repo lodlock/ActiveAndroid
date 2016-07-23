@@ -31,6 +31,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
+import android.os.Build;
 
 import com.activeandroid.sebbia.automigration.AutoMigration;
 import com.activeandroid.sebbia.util.IOUtils;
@@ -65,6 +66,25 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 	//////////////////////////////////////////////////////////////////////////////////////
 	// OVERRIDEN METHODS
 	//////////////////////////////////////////////////////////////////////////////////////
+	
+	/**
+     	* onConfigure is called when the db connection
+	* is being configured. It's the right place
+     	* to enable write-ahead logging or foreign
+     	* key support.
+     	*
+     	* Available for API level 16 (JellyBean) and above.
+     	*/
+     	@Override
+     	public void onConfigure(SQLiteDatabase db) {
+        	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        		db.enableWriteAheadLogging();
+         	}
+         	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+             		db.setForeignKeyConstraintsEnabled(true);
+         	}
+         	executePragmas(db);
+     	}
 
 	@Override
 	public void onOpen(SQLiteDatabase db) {
@@ -243,26 +263,25 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	private void executeLegacySqlScript(SQLiteDatabase db, InputStream stream) throws IOException {
-
-	    InputStreamReader reader = null;
-        BufferedReader buffer = null;
-
-        try {
-            reader = new InputStreamReader(stream);
-            buffer = new BufferedReader(reader);
-            String line = null;
-
-            while ((line = buffer.readLine()) != null) {
-                line = line.replace(";", "").trim();
-                if (!TextUtils.isEmpty(line)) {
-                    db.execSQL(line);
-                }
-            }
-
-        } finally {
-            IOUtils.closeQuietly(buffer);
-            IOUtils.closeQuietly(reader);
-
-        }
+		InputStreamReader reader = null;
+	        BufferedReader buffer = null;
+	
+	        try {
+	            reader = new InputStreamReader(stream);
+	            buffer = new BufferedReader(reader);
+	            String line = null;
+	
+	            while ((line = buffer.readLine()) != null) {
+	                line = line.replace(";", "").trim();
+	                if (!TextUtils.isEmpty(line)) {
+	                    db.execSQL(line);
+	                }
+	            }
+	
+	        } finally {
+	            IOUtils.closeQuietly(buffer);
+	            IOUtils.closeQuietly(reader);
+	
+	        }
 	}
 }
