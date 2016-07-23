@@ -1,13 +1,13 @@
 
 package com.activeandroid.test.parser;
 
-import com.activeandroid.test.ActiveAndroidTestCase;
-import com.activeandroid.test.R;
-import com.activeandroid.util.SqlParser;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+
+import com.activeandroid.sebbia.util.SqlParser;
+import com.activeandroid.test.ActiveAndroidTestCase;
+import com.activeandroid.test.R;
 
 
 public class ParserTest extends ActiveAndroidTestCase {
@@ -232,7 +232,7 @@ public class ParserTest extends ActiveAndroidTestCase {
         final String sql2 = "INSERT INTO Entity2 ( Id, Column, Column2 ) SELECT Id, Column, 0 FROM Entity";
         final String sql3 = "DROP TABLE Entity";
         final String sql4 = "ALTER TABLE Entity2 RENAME TO Entity";
-        final String sql5 = "INSERT INTO Entity2 ( Id, Column, Column2) VALUES ( 9001 , 42, 'string /* string */ -- string' )";
+        final String sql5 = "INSERT INTO Entity2 ( Id, Column, Column2 ) VALUES ( 9001 , 42, 'string /* string */ -- string' )";
 
         final InputStream stream = this.getStream(R.raw.complex);
         List<String> commands = SqlParser.parse(stream);

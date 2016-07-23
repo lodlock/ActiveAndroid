@@ -1,7 +1,7 @@
 package com.activeandroid.test.model;
 
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.Configuration;
+import com.activeandroid.sebbia.ActiveAndroid;
+import com.activeandroid.sebbia.Configuration;
 import com.activeandroid.test.ActiveAndroidTestCase;
 
 public class ModelTestCase extends ActiveAndroidTestCase {
@@ -9,7 +9,7 @@ public class ModelTestCase extends ActiveAndroidTestCase {
 	protected void setUp() throws Exception {
 		Configuration configuration = new Configuration.Builder(getContext())
         .setDatabaseName("model.db")
-        .setDatabaseVersion(2)
+        .setDatabaseVersion(3)
         .create();
 		ActiveAndroid.initialize(configuration, true);
 	}
