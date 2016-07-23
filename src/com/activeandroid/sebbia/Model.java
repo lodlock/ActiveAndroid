@@ -57,8 +57,10 @@ public abstract class Model {
 	// ////////////////////////////////////////////////////////////////////////////////////
 
 	public Model() {
+		Log.i("getting table info of:"+getClass()+" from Cache");
 		mTableInfo = Cache.getTableInfo(getClass());
 		idName = mTableInfo.getIdName();
+		Log.i("table info idName:"+idName);
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////////////
