@@ -26,7 +26,19 @@ public class SQLColumnInfo {
 		this.mColumnDefinition = TextUtils.join(" ", tokens.subList(1, tokens.size()));
 
 		this.mName = tokens.get(0);
-		this.mType = SQLiteType.valueOf(tokens.get(1).toUpperCase(Locale.US));
+
+                String type = tokens.get(1).toUpperCase(Locale.US);
+                if (type.equals("VARCHAR")) {
+                        type = "TEXT";
+                } else if (type.equals("BOOLEAN")) {
+                        type = "INTEGER";
+                }
+                try {
+ 			this.mType = SQLiteType.valueOf(type);
+ 		} catch (IllegalArgumentException e) {
+ 			e.printStackTrace();
+ 			this.mType = SQLiteType.TEXT;
+ 		}
 
 	}
 
